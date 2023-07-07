@@ -5,6 +5,7 @@
 
 import configparser, sys, argparse, os, json, io
 import ipaddress
+import socket
 from os import walk
 from grottdata import format_multi_line, str2bool
 
@@ -465,6 +466,7 @@ class Conf :
             try: 
                 ipaddress.ip_address(os.getenv('gmqttip'))
                 self.mqttip = self.getenv('gmqttip')
+                self.mqttip = socket.gethostbyname(self.mqttip) #resolve hostname
             except: 
                 if self.verbose : print("\nGrott MQTT server IP address env invalid")
         if os.getenv('gmqttport') != None :     
